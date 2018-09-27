@@ -1,0 +1,79 @@
+function totesFind(inp, total) {
+	var remaining = inp.slice(0), // clone
+		i,l, head, un, ret=[],
+		// Track unique first matches based on the index of the first number
+		// paired with the second number
+		uniques = {}; // "indexOfFirst,firstNumber,secondNumber"
+
+	for (i=0,l=inp.length;i<l;i+=1) {
+		head = remaining.shift();
+
+		remaining.forEach(function (x) {
+			un = [i,head,x].join(',');
+
+			if ((total === (head+x)) && !uniques[un]) {
+				uniques[un] = true;
+				ret.push([head,x]);
+			}
+		});
+	}
+
+	return ret;
+	/**
+		O(n^2) - I originally thought an aggressive O(n) because of the inner
+		loop reducing with each item, but then I refreshed on O-notation.
+	**/
+}
+
+// GROCERY STRUCTURE
+PriceType = {
+	ITEM,
+	WEIGHT,
+	VOLUME
+}
+
+TaxType {
+	NONE,
+	FEDERAL,
+	STATE,
+	SIN
+}
+
+Item { // DB-BACKED
+	name: STRING, // non-unique
+	code: UUID, //generated but overridable. unique
+	price: NUMERIC,
+	priceType: PriceType,
+	minimumAge: INT, // Default: 0 => everyone. 18 => cigs, 21 => alcohol
+	taxType: TaxType
+}
+
+CartItem { // Generated upon creating carts
+	quantity: INT,
+	item: Item,
+	id: INT // generated
+	constructor(Item: item, Int: quantity): CartItem
+}
+
+Tax {
+	type: TaxType
+	rate: Numeric
+}
+
+Cart {
+	id: INT // generated
+	dob(Date): Date,
+	addTaxRate(Tax: tax): Array[Tax]
+	items(): Array[CartItem],
+	add(Item, quantity): CartItem,
+	add(Item, quantity, Date): CartItem,
+	remove(CartItem): Array[CartItem],
+	subTotal(): NUMERIC,
+	tax(): NUMERIC,
+	total(): NUMERIC,
+	constructor(Array[Tax]: taxRates): Cart,
+	constructor(Array[Tax]: taxRates, Date: dob): Cart
+}
+
+
+

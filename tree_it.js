@@ -25,3 +25,23 @@ function drawTreeRow(spaceCount, bodyCount) {
 
 drawTree(6);
 drawTree(9);
+
+/*
+-> % node tree_it.js
+    #
+   ###
+  #####
+ #######
+#########
+    #
+       #
+      ###
+     #####
+    #######
+   #########
+  ###########
+ #############
+###############
+       #
+
+*/
